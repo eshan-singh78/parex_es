@@ -1,10 +1,10 @@
-## API Documentation   
+# Parex API Documentation  
 
-### 1. GET `/test`  
-#### Description  
+## 1. GET `/test`  
+### Description  
 Returns the current time in IST (Asia/Kolkata).  
 
-#### Response Example  
+### Response Example  
 ```json
 {
   "message": "Success 2025-03-15 18:45:30 IST"
@@ -13,16 +13,16 @@ Returns the current time in IST (Asia/Kolkata).
 
 ---
 
-### 2. POST `/parex_test`  
-#### Description  
+## 2. POST `/parex_test`  
+### Description  
 Uploads a file and stores it in `./tmp/`.  
 
-#### Request (Multipart Form-Data)  
+### Request (Multipart Form-Data)  
 | Field  | Type | Description |
 |--------|------|-------------|
 | `file` | File | Any file to upload |
 
-#### Response Example  
+### Response Example  
 ```json
 {
   "message": "File uploaded successfully",
@@ -32,18 +32,18 @@ Uploads a file and stores it in `./tmp/`.
 
 ---
 
-### 3. POST `/parex_process_v2`  
-#### Description  
-Processes the uploaded file using `lib.Explore` and returns a list of extracted filenames.  
+## 3. POST `/parex_process_v2`  
+### Description  
+Processes the uploaded file using `lib.Explore`, extracts filenames, and returns the time taken for processing.  
 
-#### Request (Multipart Form-Data)  
+### Request (Multipart Form-Data)  
 | Field   | Type   | Description                      |
 |---------|--------|----------------------------------|
 | `file`  | File   | File to process (stored in `./tmp/`) |
 | `offset` | Text  | Offset value (e.g., `1024`)     |
 | `level` | Text   | Processing level (`0-3`)        |
 
-#### Response Example (Success)  
+### Response Example (Success)  
 ```json
 {
   "message": "Processing completed successfully",
@@ -51,11 +51,12 @@ Processes the uploaded file using `lib.Explore` and returns a list of extracted 
     "WOQVU6AIMB.png",
     "UUU7Y77U4O.docx",
     "2YQSXPBI5F.txt"
-  ]
+  ],
+  "time_taken": "3.24 seconds"
 }
 ```
 
-#### Response Example (Error)  
+### Response Example (Error)  
 ```json
 {
   "error": "Error processing file",
@@ -65,16 +66,21 @@ Processes the uploaded file using `lib.Explore` and returns a list of extracted 
 
 ---
 
-## Testing the API with Postman  
+# Testing the API with Postman  
 
-### 1. Test `/test` Route  
-- Method: GET  
+## 1. Test `/test` Route  
+- Method: `GET`  
 - URL: `http://localhost:8080/test`  
-- Expected Response: `{ "message": "Success {IST Time}" }`  
+- Expected Response:  
+```json
+{
+  "message": "Success {IST Time}"
+}
+```
 
 ---
 
-### 2. Test `/parex_test` (File Upload Route)  
+## 2. Test `/parex_test` (File Upload Route)  
 1. Open Postman  
 2. Method: `POST`  
 3. URL: `http://localhost:8080/parex_test`  
@@ -92,7 +98,7 @@ Processes the uploaded file using `lib.Explore` and returns a list of extracted 
 
 ---
 
-### 3. Test `/parex_process_v2` (File Processing with Filenames Extraction)  
+## 3. Test `/parex_process_v2` (File Processing with Filenames Extraction & Time Taken)  
 1. Open Postman  
 2. Method: `POST`  
 3. URL: `http://localhost:8080/parex_process_v2`  
@@ -105,12 +111,13 @@ Processes the uploaded file using `lib.Explore` and returns a list of extracted 
 7. Expected Response (if successful):  
 ```json
 {
-  "message": "Processing completed successfully",
   "filenames": [
     "WOQVU6AIMB.png",
     "UUU7Y77U4O.docx",
     "2YQSXPBI5F.txt"
-  ]
+  ],
+  "message": "Processing completed successfully",
+  "time_taken": "3.24 seconds"
 }
 ```
 8. Expected Response (if error occurs):  
