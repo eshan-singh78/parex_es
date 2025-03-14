@@ -97,6 +97,8 @@ func main() {
 		}
 		defer out.Close()
 
+		startTime := time.Now()
+
 		oldStdout := os.Stdout
 		os.Stdout = out
 		err = lib.Explore(imageFile, uint64(offset), level)
@@ -119,9 +121,12 @@ func main() {
 			return
 		}
 
+		timeTaken := time.Since(startTime).Seconds()
+
 		c.JSON(200, gin.H{
-			"message":   "Processing completed successfully",
-			"filenames": fileNames,
+			"message":    "Processing completed successfully",
+			"filenames":  fileNames,
+			"time_taken": fmt.Sprintf("%.2f seconds", timeTaken),
 		})
 	})
 
