@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-const testfilepath = "N:\\research\\testdata\\gb1.dd"
+const testfilepath = "tools/mb100.dd"
 
 func Benchmark_Fls(b *testing.B) {
 	run(b, 0)

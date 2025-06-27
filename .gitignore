@@ -1,2 +1,4 @@
 *.exe
 data/
+tools/
+tmp/
